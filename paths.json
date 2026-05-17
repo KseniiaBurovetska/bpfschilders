@@ -1,8 +1,12 @@
 {
   "mappings": [
-    "/content/aem-boilerplate/:/"
+    "/content/bpfschilders/:/",
+    "/content/bpfschilders/configuration:/.helix/config.json",
+    "/content/bpfschilders/metadata:/metadata.json",
+    "/content/bpfschilders/redirects:/redirects.json",
+    "/content/bpfschilders/taxonomy:/taxonomy.json"
   ],
   "includes": [
-    "/content/aem-boilerplate/"
+    "/content/bpfschilders/"
   ]
 }

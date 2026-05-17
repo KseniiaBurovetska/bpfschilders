@@ -16,11 +16,32 @@
    ────────────────────────────────────────────────────────────────────────── */
 @font-face {
   font-family: 'BPFicons';
-  src: url('https://cdn.infodesk.nl/assets/fonts/bpficons.woff') format('woff');
+  src: url('/fonts/bpficons.woff') format('woff'),
+       url('https://cdn.infodesk.nl/assets/fonts/bpficons.woff') format('woff');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
+
+/* ── BPFicons glyph mappings ───────────────────────────────────────────────
+   Unicode codepoints sourced from the live site's CSS (global.css).
+   Each class maps to a character in the BPFicons font.
+   ────────────────────────────────────────────────────────────────────────── */
+.icon-bpf-arbeidsongeschikt::before  { content: "\e600"; }
+.icon-bpf-kinderen::before           { content: "\e601"; }
+.icon-bpf-ontslag::before            { content: "\e602"; }
+.icon-bpf-overlijden::before         { content: "\e603"; }
+.icon-bpf-pensioen::before           { content: "\e604"; }
+.icon-bpf-samenwonen::before         { content: "\e605"; }
+.icon-bpf-scheiden::before           { content: "\e606"; }
+.icon-bpf-trouwen::before            { content: "\e607"; }
+.icon-bpf-veranderenvanbaan::before  { content: "\e608"; }
+.icon-bpf-verhuizen::before          { content: "\e609"; }
+.icon-bpf-voorjezelfbeginnen::before { content: "\e60a"; }
+.icon-bpf-verlof::before             { content: "\e903"; }
+.icon-bpf-uitzendkracht::before      { content: "\e902"; }
+.icon-bpf-klantworden::before        { content: "\e901"; }
+.icon-bpf-informatie::before         { content: "\e900"; }
 
 /* ── Block root ─────────────────────────────────────────────────────────── */
 .carousel.block {
