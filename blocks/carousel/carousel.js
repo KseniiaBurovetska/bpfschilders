@@ -49,10 +49,13 @@ function getItemsPerPage() {
   return 2;
 }
 
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
 export default function decorate(block) {
   // ── 1. Parse authored rows ───────────────────────────────────────────────
   const rows = [...block.querySelectorAll(':scope > div')];
   let headingText = 'Wat doe ik bij...';
+  let headingRow = null;
   const items = [];
 
   rows.forEach((row) => {
@@ -60,12 +63,14 @@ export default function decorate(block) {
     if (cells.length === 1) {
       // Single-cell row = section heading
       headingText = cells[0].textContent.trim() || headingText;
+      headingRow = row;
     } else if (cells.length >= 3) {
       // Three-cell row = icon_class | label | href
       items.push({
         iconClass: cells[0].textContent.trim(),
         label:     cells[1].textContent.trim(),
         href:      cells[2].querySelector('a')?.href || cells[2].textContent.trim(),
+        _row:      row,
       });
     } else if (cells.length === 2) {
       // Two-cell row = label | href (icon class derived from label slug)
@@ -73,6 +78,7 @@ export default function decorate(block) {
         iconClass: '',
         label:     cells[0].textContent.trim(),
         href:      cells[1].querySelector('a')?.href || cells[1].textContent.trim(),
+        _row:      row,
       });
     }
   });
@@ -91,6 +97,7 @@ export default function decorate(block) {
   const heading = document.createElement('h1');
   heading.className = 'section-header';
   heading.textContent = headingText;
+  if (headingRow) moveInstrumentation(headingRow, heading);
   wrapper.appendChild(heading);
 
   // Carrousel container (note: "carrousel" spelling preserved from source)
@@ -110,6 +117,7 @@ export default function decorate(block) {
   carouselItems.forEach((item, index) => {
     const li = document.createElement('li');
     if (index === 0) li.classList.add('active');
+    if (item._row) moveInstrumentation(item._row, li);
 
     const a = document.createElement('a');
     a.href = item.href || '#';

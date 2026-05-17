@@ -208,7 +208,10 @@ function buildHamburger() {
   return btn;
 }
 
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
 export default function decorate(block) {
+  const authoredRows = [...block.querySelectorAll(':scope > div')];
   const content = parseAuthoredContent(block) || {
     logoHref: LOGO_HREF,
     logoSrc: LOGO_SRC,
@@ -247,6 +250,12 @@ export default function decorate(block) {
 
   bottomInner.append(mainNav, search);
   headerBottom.append(bottomInner);
+
+  // Transfer UE instrumentation from authored rows to semantic containers
+  if (authoredRows[0]) moveInstrumentation(authoredRows[0], headerTop);
+  if (authoredRows[1]) moveInstrumentation(authoredRows[1], topNav);
+  if (authoredRows[2]) moveInstrumentation(authoredRows[2], mainNav);
+  if (authoredRows[3]) moveInstrumentation(authoredRows[3], search);
 
   block.append(headerTop, headerBottom);
 

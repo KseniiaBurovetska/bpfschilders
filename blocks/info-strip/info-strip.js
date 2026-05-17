@@ -89,6 +89,8 @@ function buildLoginPanel(opts) {
   return panel;
 }
 
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
 export default function decorate(block) {
   // Read authored overrides from table rows if present
   const rows = [...block.querySelectorAll(':scope > div')];
@@ -111,8 +113,14 @@ export default function decorate(block) {
   const wrapper = document.createElement('div');
   wrapper.className = 'info-strip-wrapper';
 
-  wrapper.appendChild(buildCoveragePanel(coverageOpts));
-  wrapper.appendChild(buildLoginPanel(loginOpts));
+  const coveragePanel = buildCoveragePanel(coverageOpts);
+  const loginPanel = buildLoginPanel(loginOpts);
+
+  if (rows[0]) moveInstrumentation(rows[0], coveragePanel);
+  if (rows[1]) moveInstrumentation(rows[1], loginPanel);
+
+  wrapper.appendChild(coveragePanel);
+  wrapper.appendChild(loginPanel);
 
   block.appendChild(wrapper);
 }

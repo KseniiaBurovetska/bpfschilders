@@ -33,6 +33,8 @@
  *   </div>
  */
 
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
 export default function decorate(block) {
   const rows = [...block.children];
 
@@ -43,6 +45,7 @@ export default function decorate(block) {
     const cells = [...row.children];
     const li = document.createElement('li');
     li.className = 'card';
+    moveInstrumentation(row, li);
 
     // ── Image cell (first cell) ────────────────────────────────────────────
     const imageCell = cells[0];
@@ -70,6 +73,7 @@ export default function decorate(block) {
       anchor.className = 'card-image-link';
       anchor.href = imageLinkHref || '#';
       anchor.appendChild(figure);
+      moveInstrumentation(imageCell, anchor);
 
       li.appendChild(anchor);
     }
@@ -79,6 +83,7 @@ export default function decorate(block) {
     if (contentCell) {
       const body = document.createElement('div');
       body.className = 'cards-card-body';
+      moveInstrumentation(contentCell, body);
 
       // Heading: first h1–h3 or first strong text
       const sourceHeading = contentCell.querySelector('h1, h2, h3, h4');
