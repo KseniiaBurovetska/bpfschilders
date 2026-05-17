@@ -1,17 +1,15 @@
 /*
  * BPF Schilders — header block
  * Source component: SiteHeaderNavigation
- * Derived from: scaffold/SiteHeaderNavigation/draft.module.css + computed-styles.desktop.json
- * Token reference: global/design-tokens.yaml
  *
- * Selector scope: .header.block  (EDS mounts the block as <div class="header block">)
- * All selectors are written relative to that root.
+ * Two-band layout matching source:
+ *   .header-top    → gray band (70px): logo + top-nav + hamburger
+ *   .header-bottom → white band (64px): main-nav + search
+ *
+ * Selector scope: .header.block
  */
 
-/* ─── Font faces ─────────────────────────────────────────────────────────────
-   Fonts are served from the CDN URLs captured in design-tokens.yaml.
-   FontAwesome is needed for the search icon (unicode f002).
-*/
+/* ─── Fonts ──────────────────────────────────────────────────────────────── */
 @font-face {
   font-family: Lato;
   font-weight: 400;
@@ -36,39 +34,43 @@
   font-display: block;
 }
 
-/* ─── Block root ─────────────────────────────────────────────────────────────
-   The EDS block element receives class="header block".
-   We match it as .header.block so the rules don't bleed into page-level <header>.
-*/
+/* ─── Global overrides ───────────────────────────────────────────────────── */
+.header.block a:any-link {
+  color: rgb(68, 35, 89);
+}
+
+.header.block a:hover {
+  color: rgb(0, 0, 0);
+  text-decoration: underline;
+}
+
+/* ─── Block root ─────────────────────────────────────────────────────────── */
 .header.block {
   display: block;
   position: relative;
   z-index: 50;
   width: 100%;
-  min-height: 60px;
-  height: 60px;
-  background-color: rgb(244, 244, 244);
-  color: rgb(33, 33, 33);
   font-family: Helvetica, Arial, sans-serif;
   font-size: 13.712px;
   font-weight: 400;
   line-height: 22.6248px;
-  /* The 64px white strip below the header is the border-bottom trick */
-  border-bottom: 64px solid rgb(255, 255, 255);
   box-shadow: rgba(0, 0, 0, 0.1) 0px 3px 3px 0px;
-  overflow: visible;
+}
+
+/* ─── Top band (gray, 70px) ──────────────────────────────────────────────── */
+.header.block .header-top {
+  background-color: rgb(244, 244, 244);
+  height: 60px;
+  width: 100%;
 }
 
 @media (min-width: 600px) {
-  .header.block {
+  .header.block .header-top {
     height: 70px;
   }
 }
 
-/* ─── Container ──────────────────────────────────────────────────────────────
-   Mirrors div.container: flex row, space-between, max 1200px centred.
-*/
-.header.block .header-container {
+.header.block .header-top-inner {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -80,10 +82,55 @@
   box-sizing: border-box;
 }
 
-/* ─── Logo ───────────────────────────────────────────────────────────────────
-   Source: a.logo with CSS background-image converted to <img> for EDS (per spec).
-   height matches computed height; width matches computed width.
-*/
+/* ─── Bottom band (white, 64px) ──────────────────────────────────────────── */
+/* Hidden on mobile; revealed when hamburger opens via .is-open */
+.header.block .header-bottom {
+  display: none;
+  background-color: rgb(255, 255, 255);
+  border-top: 1px solid rgb(220, 220, 220);
+  width: 100%;
+}
+
+.header.block .header-bottom.is-open {
+  display: block;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 60px;
+  z-index: 100;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 3px 3px 0px;
+}
+
+@media (min-width: 1200px) {
+  .header.block .header-bottom {
+    display: block;
+    position: static;
+    height: 64px;
+  }
+}
+
+.header.block .header-bottom-inner {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  height: 100%;
+  margin: 0 auto;
+  padding: 0 15px;
+  box-sizing: border-box;
+}
+
+/* Mobile: stack nav + search vertically when open */
+@media (max-width: 1199px) {
+  .header.block .header-bottom.is-open .header-bottom-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px 15px;
+  }
+}
+
+/* ─── Logo ───────────────────────────────────────────────────────────────── */
 .header.block .header-logo {
   display: block;
   flex-shrink: 0;
@@ -107,77 +154,35 @@
   }
 }
 
-/* ─── Navigation wrapper ─────────────────────────────────────────────────────
-   Mirrors div.header-navigation — stacks top-nav above main-nav on desktop.
-   Hidden on mobile (hamburger reveals it).
-*/
-.header.block .header-navigation {
+/* ─── Top navigation ─────────────────────────────────────────────────────── */
+/* Hidden on mobile (hamburger replaces it); visible on desktop in top band */
+.header.block .top-navigation {
   display: none;
-  flex-direction: column;
   flex: 1 1 auto;
-  margin: 0 20px;
-}
-
-.header.block .header-navigation.is-open {
-  display: flex;
-  flex-direction: column;
-  position: absolute;
-  top: 60px;
-  left: 0;
-  right: 0;
-  background-color: rgb(244, 244, 244);
-  z-index: 100;
-  padding: 10px 15px;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 3px 3px 0px;
+  justify-content: flex-end;
 }
 
 @media (min-width: 1200px) {
-  .header.block .header-navigation {
+  .header.block .top-navigation {
     display: flex;
-    position: static;
-    background: none;
-    box-shadow: none;
-    padding: 0;
+    justify-content: flex-end;
   }
 }
 
-/* ─── Navigation shared list styles ─────────────────────────────────────────*/
-.header.block .top-navigation,
-.header.block .main-navigation {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.header.block .top-navigation ul,
-.header.block .main-navigation ul {
+.header.block .top-navigation ul {
   list-style: none;
   margin: 0;
   padding: 0;
   display: flex;
   flex-wrap: wrap;
-  gap: 0;
+  justify-content: flex-end;
+  gap: 2px;
   align-items: center;
 }
 
-.header.block .top-navigation li,
-.header.block .main-navigation li {
+.header.block .top-navigation li {
   margin: 0;
   padding: 0;
-}
-
-/* ─── Top navigation ─────────────────────────────────────────────────────────
-   7-item row; aligns to the right side of the header on desktop.
-*/
-.header.block .top-navigation {
-  display: flex;
-  justify-content: flex-end;
-  margin-bottom: 0;
-}
-
-.header.block .top-navigation ul {
-  justify-content: flex-end;
-  gap: 2px;
 }
 
 .header.block .top-navigation li a {
@@ -192,7 +197,7 @@
 }
 
 .header.block .top-navigation li.active a {
-  font-weight: 700;
+  text-decoration: underline;
 }
 
 .header.block .top-navigation li a:hover {
@@ -205,16 +210,44 @@
   outline-offset: 2px;
 }
 
-/* ─── Main navigation ────────────────────────────────────────────────────────
-   6-item row including Home icon; sits below top-nav on desktop.
-*/
+/* Mobile: show top-nav stacked inside open hamburger panel */
+.header.block .header-bottom.is-open .top-navigation {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: flex-start;
+  margin-bottom: 8px;
+}
+
+.header.block .header-bottom.is-open .top-navigation ul {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
+}
+
+.header.block .header-bottom.is-open .top-navigation li a {
+  padding: 8px 0;
+}
+
+/* ─── Main navigation ────────────────────────────────────────────────────── */
 .header.block .main-navigation {
   display: flex;
+  flex: 1 1 auto;
 }
 
 .header.block .main-navigation ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: nowrap;
   gap: 0;
   align-items: center;
+}
+
+.header.block .main-navigation li {
+  margin: 0;
+  padding: 0;
 }
 
 .header.block .main-navigation li a {
@@ -242,9 +275,18 @@
   outline-offset: 2px;
 }
 
-/* ─── Home icon ──────────────────────────────────────────────────────────────
-   Rendered via ::before using FontAwesome home glyph (f015).
-*/
+/* Mobile: stacked in hamburger panel */
+.header.block .header-bottom.is-open .main-navigation ul {
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.header.block .header-bottom.is-open .main-navigation li a {
+  padding: 8px 0;
+}
+
+/* ─── Home icon ──────────────────────────────────────────────────────────── */
 .header.block .main-navigation li.home a {
   display: flex;
   align-items: center;
@@ -264,7 +306,6 @@
   content: '\f015';
 }
 
-/* Screen-reader-only helper */
 .header.block .sr-only {
   position: absolute;
   width: 1px;
@@ -277,12 +318,9 @@
   border: 0;
 }
 
-/* ─── Search container ───────────────────────────────────────────────────────
-   Mirrors div.search-container: input + submit button side by side.
-*/
+/* ─── Search container ───────────────────────────────────────────────────── */
 .header.block .search-container {
   flex-shrink: 0;
-  display: block;
 }
 
 .header.block .search-container form {
@@ -344,7 +382,6 @@
   outline-offset: 2px;
 }
 
-/* FontAwesome search icon glyph (f002) */
 .header.block .icon.icon-search {
   display: inline-block;
   font-family: FontAwesome, serif;
@@ -359,9 +396,7 @@
   content: '\f002';
 }
 
-/* ─── Hamburger button ───────────────────────────────────────────────────────
-   44×44px touch target; visible on mobile, hidden on desktop.
-*/
+/* ─── Hamburger button ───────────────────────────────────────────────────── */
 .header.block .header-hamburger {
   display: flex;
   flex-direction: column;
@@ -392,7 +427,6 @@
   transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
-/* Animate hamburger to X when open */
 .header.block .header-hamburger.is-open .hamburger-line:nth-child(1) {
   transform: translateY(7px) rotate(45deg);
 }
@@ -411,21 +445,7 @@
   }
 }
 
-/* ─── Mobile: nav open state ─────────────────────────────────────────────────
-   When .is-open is added to .header-navigation the nav drops below the header.
-*/
-.header.block .header-navigation.is-open .top-navigation,
-.header.block .header-navigation.is-open .main-navigation {
-  display: flex;
-}
-
-.header.block .header-navigation.is-open .top-navigation ul,
-.header.block .header-navigation.is-open .main-navigation ul {
-  flex-direction: column;
-  align-items: flex-start;
-}
-
-.header.block .header-navigation.is-open .top-navigation li a,
-.header.block .header-navigation.is-open .main-navigation li a {
-  padding: 8px 0;
-}
+/* ─── Mobile: top-nav moves into bottom band when open ───────────────────── */
+/* On mobile the top-navigation is rendered inside .header-bottom so it
+   appears in the hamburger drawer. It is invisible in .header-top on mobile
+   because .top-navigation { display: none } until min-width: 1200px.       */

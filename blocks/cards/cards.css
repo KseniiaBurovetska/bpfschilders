@@ -12,6 +12,31 @@
  * directory via the @font-face declaration in styles.css.
  */
 
+/* ── Font faces ──────────────────────────────────────────────────────────── */
+@font-face {
+  font-family: Lato;
+  font-weight: 400;
+  font-style: normal;
+  src: url('https://cdn.infodesk.nl/assets/fonts/lato-regular-webfont.woff') format('woff');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: Lato;
+  font-weight: 700;
+  font-style: normal;
+  src: url('https://cdn.infodesk.nl/assets/fonts/lato-bold-webfont.woff') format('woff');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: FontAwesome;
+  font-weight: 400;
+  font-style: normal;
+  src: url('https://cdn.infodesk.nl/assets/fonts/fontawesome-webfont.woff') format('woff');
+  font-display: block;
+}
+
 /* ── Section wrapper ─────────────────────────────────────────────────────── */
 .cards {
   margin: 30px 0;
@@ -22,7 +47,16 @@
   line-height: 22.6248px;
 }
 
+/* ── Override global styles.css link color ───────────────────────────────── */
+/* styles.css sets a:any-link { color: var(--link-color) } which would make all
+   card links blue. Override here to restore source values. */
+.cards a:any-link {
+  color: inherit;
+}
+
 /* ── Card grid ───────────────────────────────────────────────────────────── */
+/* Source container: max-width 1000px centred with 140px side margins at 1280px.
+   EDS equivalent: max-width 1200px with 15px padding (no col gutter in source). */
 .cards .cards-wrapper {
   list-style: none;
   margin: 0 auto;
@@ -35,6 +69,7 @@
 }
 
 /* ── Individual card column ──────────────────────────────────────────────── */
+/* Source: cards have marginTop: 30px. Replicate with margin-top on each card. */
 .cards .card {
   width: 100%;
   padding: 0 8px;
@@ -75,9 +110,10 @@
 }
 
 /* The card visual box = image link + body grouped together */
+/* Source computed style: boxShadow: rgba(0,0,0,0.25) 0px 0px 10px 0px */
 .cards .card {
   background-color: rgb(255, 255, 255);
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 4px 0px;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 0px 10px 0px;
   border-radius: 0;
   overflow: hidden;
 }
@@ -117,14 +153,18 @@
 }
 
 /* ── Card heading (h2) ──────────────────────────────────────────────────── */
+/* Source panel has padding: 30px all sides. Image is outside the padding area.
+   Heading is first element inside white panel box after the image. */
 .cards .card-heading {
   color: rgb(68, 35, 89);
   font-size: 17.044px;
+  /* Override global styles.css h2 { font-family: var(--heading-font-family) } */
   font-family: Lato, Arial, sans-serif;
   font-weight: 700;
   line-height: 22.6248px;
+  /* Source panel: padding: 30px. Heading starts at top of text area. */
   margin: 0 0 5.62453px;
-  padding: 15px 16px 0;
+  padding: 30px 30px 0;
 }
 
 /* ── Card body paragraph ────────────────────────────────────────────────── */
@@ -134,10 +174,13 @@
   font-size: 13.712px;
   line-height: 22.6248px;
   margin: 6.856px 0 13.712px;
-  padding: 0 16px;
+  padding: 0 30px;
 }
 
 /* ── CTA button ─────────────────────────────────────────────────────────── */
+/* Override global styles.css a.button:any-link which sets:
+   border-radius: 2.4em; background-color: var(--link-color) (blue); border: 2px solid transparent
+   Source button: no border-radius, brand purple background, 0 border */
 .cards .card-cta.button {
   display: inline-flex;
   align-items: center;
@@ -151,10 +194,16 @@
   padding: 9.40369px 15.6728px;
   text-decoration: none;
   border-radius: 0;
-  margin: 0 16px 16px;
-  cursor: pointer;
   border: none;
+  /* Source panel: padding 30px. Button aligns with text at left. */
+  margin: 0 30px 30px;
+  cursor: pointer;
   transition: background-color 0.15s ease;
+  /* Ensure these override global styles */
+  max-width: none;
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
 }
 
 /* FontAwesome fa-angle-right icon ( f105 ) */

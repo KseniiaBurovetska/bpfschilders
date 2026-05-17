@@ -24,6 +24,19 @@
   font-display: swap;
 }
 
+/* ── Override global styles.css rules ── */
+/* styles.css: a:any-link { color: var(--link-color) } → must be rgb(33,33,33) for panel links */
+.info-strip a:any-link {
+  color: rgb(33, 33, 33);
+}
+/* styles.css: .icon { width: 24px; height: 24px } → overrides FA icon container to 24px;
+   source icon is 48px. Override here with !important to win specificity. */
+.info-strip .icon {
+  width: auto !important;
+  height: auto !important;
+}
+/* styles.css: .icon img { height: 100%; width: 100% } — no img in FA icon, no conflict */
+
 /* ── Section wrapper ── */
 .info-strip {
   background-color: #f4f4f4;

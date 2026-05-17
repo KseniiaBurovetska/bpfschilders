@@ -1,14 +1,11 @@
 /**
  * BPF Schilders — header block
  * Source component: SiteHeaderNavigation (header.main-header)
- * Source URL: https://www.bpfschilders.nl/werknemer
  *
- * Builds the full header DOM from authored block content or falls back to
- * hard-coded navigation data derived from the captured DOM snapshot.
- * EDS convention: decorate(block) receives the block root div.
+ * Two-band layout:
+ *   .header-top  (gray 70px): logo + top-navigation + hamburger
+ *   .header-bottom (white 64px): main-navigation + search
  */
-
-// ─── Static navigation data from dom-snapshot.json ───────────────────────────
 
 const TOP_NAV_LINKS = [
   { href: '/werknemer/', text: 'Werknemer' },
@@ -34,18 +31,6 @@ const LOGO_HREF = '/';
 const SEARCH_PLACEHOLDER = 'Heeft u een vraag?';
 const SEARCH_ARIA_LABEL = 'Zoeken';
 
-// ─── Helpers ─────────────────────────────────────────────────────────────────
-
-/**
- * Attempt to read authored content from block cells.
- * Block table structure (EDS): block > div (row) > div (cell)
- * Row 0 cell 0: logo link href
- * Row 0 cell 1: logo image src (or empty — use default)
- * Row 1 cell 0..N: top-nav links (one per cell, format "text|href")
- * Row 2 cell 0..N: main-nav links (one per cell, format "text|href")
- * Row 3 cell 0: search placeholder
- * Row 3 cell 1: search aria-label
- */
 function parseAuthoredContent(block) {
   const rows = [...block.querySelectorAll(':scope > div')];
   if (!rows.length) return null;
@@ -65,11 +50,19 @@ function parseAuthoredContent(block) {
     const links = cells
       .map((cell) => {
         const anchor = cell.querySelector('a');
-        if (anchor) return { href: anchor.href, text: anchor.textContent.trim() };
-        const text = cell.textContent.trim();
-        if (!text) return null;
-        const parts = text.split('|');
-        return parts.length === 2 ? { href: parts[1].trim(), text: parts[0].trim() } : null;
+        let href, text;
+        if (anchor) {
+          href = anchor.getAttribute('href');
+          text = anchor.textContent.trim();
+        } else {
+          const raw = cell.textContent.trim();
+          if (!raw) return null;
+          const parts = raw.split('|');
+          if (parts.length !== 2) return null;
+          [text, href] = parts.map((s) => s.trim());
+        }
+        const cssClass = text === 'Home' ? 'home' : '';
+        return { href, text, cssClass };
       })
       .filter(Boolean);
     return links.length ? links : null;
@@ -84,8 +77,6 @@ function parseAuthoredContent(block) {
     searchAriaLabel: getCell(3, 1) || SEARCH_ARIA_LABEL,
   };
 }
-
-// ─── DOM builders ─────────────────────────────────────────────────────────────
 
 function buildLogo(logoHref, logoSrc) {
   const a = document.createElement('a');
@@ -111,12 +102,22 @@ function buildTopNav(links) {
 
   const ul = document.createElement('ul');
 
-  links.forEach((link) => {
+  const currentPath = window.location.pathname;
+  const hasPathMatch = links.some(
+    (l) => l.href && currentPath.startsWith(l.href) && l.href !== '/',
+  );
+
+  links.forEach((link, idx) => {
     const li = document.createElement('li');
     const a = document.createElement('a');
     a.href = link.href;
     a.textContent = link.text;
-    if (link.cssClass) li.className = link.cssClass;
+
+    const classes = link.cssClass ? [link.cssClass] : [];
+    const pathMatch = link.href && currentPath.startsWith(link.href) && link.href !== '/';
+    if (pathMatch || (!hasPathMatch && idx === 0)) classes.push('active');
+    if (classes.length) li.className = classes.join(' ');
+
     li.append(a);
     ul.append(li);
   });
@@ -141,7 +142,6 @@ function buildMainNav(links) {
     a.href = link.href;
 
     if (link.cssClass === 'home') {
-      // Render as home icon (FontAwesome home glyph via span) + visually hidden text
       const icon = document.createElement('span');
       icon.className = 'header-home-icon';
       icon.setAttribute('aria-hidden', 'true');
@@ -181,7 +181,6 @@ function buildSearch(placeholder, ariaLabel) {
   button.setAttribute('aria-label', ariaLabel);
   button.className = 'search-submit';
 
-  // FontAwesome search icon via icon span
   const icon = document.createElement('span');
   icon.className = 'icon icon-search';
   icon.setAttribute('aria-hidden', 'true');
@@ -198,9 +197,8 @@ function buildHamburger() {
   btn.className = 'header-hamburger';
   btn.setAttribute('aria-label', 'Open menu');
   btn.setAttribute('aria-expanded', 'false');
-  btn.setAttribute('aria-controls', 'header-navigation');
+  btn.setAttribute('aria-controls', 'header-nav-bottom');
 
-  // Three lines (CSS draws them)
   for (let i = 0; i < 3; i += 1) {
     const line = document.createElement('span');
     line.className = 'hamburger-line';
@@ -209,8 +207,6 @@ function buildHamburger() {
 
   return btn;
 }
-
-// ─── Main decoration function ─────────────────────────────────────────────────
 
 export default function decorate(block) {
   const content = parseAuthoredContent(block) || {
@@ -222,53 +218,52 @@ export default function decorate(block) {
     searchAriaLabel: SEARCH_ARIA_LABEL,
   };
 
-  // Clear the authored table markup
   block.textContent = '';
 
-  // Build the container (mirrors div.container from source)
-  const container = document.createElement('div');
-  container.className = 'header-container';
+  // ── Top band: gray strip with logo + top-nav + hamburger ──────────────────
+  const headerTop = document.createElement('div');
+  headerTop.className = 'header-top';
 
-  // Logo
+  const topInner = document.createElement('div');
+  topInner.className = 'header-top-inner';
+
   const logo = buildLogo(content.logoHref, content.logoSrc);
-  container.append(logo);
-
-  // Navigation wrapper (mirrors div.header-navigation)
-  const navWrapper = document.createElement('div');
-  navWrapper.id = 'header-navigation';
-  navWrapper.className = 'header-navigation';
-
   const topNav = buildTopNav(content.topNavLinks);
-  const mainNav = buildMainNav(content.mainNavLinks);
-
-  navWrapper.append(topNav, mainNav);
-  container.append(navWrapper);
-
-  // Search
-  const search = buildSearch(content.searchPlaceholder, content.searchAriaLabel);
-  container.append(search);
-
-  // Hamburger (mobile only — visible via CSS)
   const hamburger = buildHamburger();
-  container.append(hamburger);
 
-  block.append(container);
+  topInner.append(logo, topNav, hamburger);
+  headerTop.append(topInner);
 
-  // ── Hamburger toggle interaction ──────────────────────────────────────────
+  // ── Bottom band: white strip with main-nav + search ───────────────────────
+  const headerBottom = document.createElement('div');
+  headerBottom.id = 'header-nav-bottom';
+  headerBottom.className = 'header-bottom';
+
+  const bottomInner = document.createElement('div');
+  bottomInner.className = 'header-bottom-inner';
+
+  const mainNav = buildMainNav(content.mainNavLinks);
+  const search = buildSearch(content.searchPlaceholder, content.searchAriaLabel);
+
+  bottomInner.append(mainNav, search);
+  headerBottom.append(bottomInner);
+
+  block.append(headerTop, headerBottom);
+
+  // ── Hamburger toggle (mobile) ─────────────────────────────────────────────
   hamburger.addEventListener('click', () => {
     const expanded = hamburger.getAttribute('aria-expanded') === 'true';
     hamburger.setAttribute('aria-expanded', String(!expanded));
     hamburger.setAttribute('aria-label', expanded ? 'Open menu' : 'Close menu');
-    navWrapper.classList.toggle('is-open', !expanded);
+    headerBottom.classList.toggle('is-open', !expanded);
     hamburger.classList.toggle('is-open', !expanded);
   });
 
-  // Close nav on Escape
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && hamburger.getAttribute('aria-expanded') === 'true') {
       hamburger.setAttribute('aria-expanded', 'false');
       hamburger.setAttribute('aria-label', 'Open menu');
-      navWrapper.classList.remove('is-open');
+      headerBottom.classList.remove('is-open');
       hamburger.classList.remove('is-open');
       hamburger.focus();
     }
