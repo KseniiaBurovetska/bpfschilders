@@ -1,0 +1,83 @@
+{
+  "definitions": [
+    {
+      "title": "Carousel",
+      "id": "carousel",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "name": "Carousel",
+              "filter": "carousel"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Carousel Item",
+      "id": "carousel-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "name": "Carousel Item",
+              "model": "carousel-item"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "carousel",
+      "fields": [
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "section_heading",
+          "label": "Sectie titel",
+          "required": true
+        }
+      ]
+    },
+    {
+      "id": "carousel-item",
+      "fields": [
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "icon_class",
+          "label": "Icoon klasse (BPFicons)",
+          "required": true,
+          "description": "Een van: icon-bpf-pensioen, icon-bpf-trouwen, icon-bpf-verhuizen, icon-bpf-scheiden, icon-bpf-ontslag, icon-bpf-veranderenvanbaan, icon-bpf-uitzendkracht, icon-bpf-voorjezelfbeginnen, icon-bpf-arbeidsongeschikt, icon-bpf-verlof, icon-bpf-overlijden"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "item_label",
+          "label": "Item label",
+          "required": true
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "item_link",
+          "label": "Item link (href)",
+          "required": true
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "carousel",
+      "components": [
+        "carousel-item"
+      ]
+    }
+  ]
+}

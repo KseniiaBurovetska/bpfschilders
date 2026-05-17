@@ -6,20 +6,20 @@
         "component": "text",
         "valueType": "string",
         "name": "jcr:title",
-        "label": "Titel"
+        "label": "Title"
       },
       {
         "component": "text",
         "valueType": "string",
         "name": "jcr:description",
-        "label": "Beschrijving"
+        "label": "Description"
       },
       {
         "component": "text",
         "valueType": "string",
         "name": "keywords",
         "multi": true,
-        "label": "Trefwoorden"
+        "label": "Keywords"
       }
     ]
   },
@@ -29,13 +29,13 @@
       {
         "component": "reference",
         "name": "image",
-        "label": "Afbeelding",
+        "label": "Image",
         "multi": false
       },
       {
         "component": "text",
         "name": "imageAlt",
-        "label": "Alternatieve tekst"
+        "label": "Alt Text"
       }
     ]
   },
@@ -45,19 +45,37 @@
       {
         "component": "text",
         "name": "title",
-        "label": "Titel"
+        "label": "Title"
       },
       {
         "component": "select",
         "name": "titleType",
-        "label": "Koptype",
+        "label": "Title Type",
         "options": [
-          { "name": "h1", "value": "h1" },
-          { "name": "h2", "value": "h2" },
-          { "name": "h3", "value": "h3" },
-          { "name": "h4", "value": "h4" },
-          { "name": "h5", "value": "h5" },
-          { "name": "h6", "value": "h6" }
+          {
+            "name": "h1",
+            "value": "h1"
+          },
+          {
+            "name": "h2",
+            "value": "h2"
+          },
+          {
+            "name": "h3",
+            "value": "h3"
+          },
+          {
+            "name": "h4",
+            "value": "h4"
+          },
+          {
+            "name": "h5",
+            "value": "h5"
+          },
+          {
+            "name": "h6",
+            "value": "h6"
+          }
         ]
       }
     ]
@@ -73,21 +91,30 @@
       {
         "component": "text",
         "name": "linkText",
-        "label": "Tekst"
+        "label": "Text"
       },
       {
         "component": "text",
         "name": "linkTitle",
-        "label": "Titel"
+        "label": "Title"
       },
       {
         "component": "select",
         "name": "linkType",
         "label": "Type",
         "options": [
-          { "name": "Standaard", "value": "" },
-          { "name": "Primair", "value": "primary" },
-          { "name": "Secundair", "value": "secondary" }
+          {
+            "name": "default",
+            "value": ""
+          },
+          {
+            "name": "primary",
+            "value": "primary"
+          },
+          {
+            "name": "secondary",
+            "value": "secondary"
+          }
         ]
       }
     ]
@@ -98,48 +125,19 @@
       {
         "component": "text",
         "name": "name",
-        "label": "Sectienaam",
-        "description": "Het label dat voor deze sectie in de inhoudsstructuur wordt getoond"
+        "label": "Section Name",
+        "description": "The label shown for this section in the Content Tree"
       },
       {
         "component": "multiselect",
         "name": "style",
-        "label": "Stijl",
+        "label": "Style",
         "options": [
-          { "name": "Markering", "value": "highlight" }
+          {
+            "name": "Highlight",
+            "value": "highlight"
+          }
         ]
-      }
-    ]
-  },
-  {
-    "id": "header",
-    "fields": [
-      {
-        "component": "reference",
-        "valueType": "string",
-        "name": "logo_image",
-        "label": "Logo afbeelding",
-        "multi": false,
-        "required": true
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "logo_link",
-        "label": "Logo link (href)",
-        "required": true
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "search_placeholder",
-        "label": "Zoekveld placeholder"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "search_aria_label",
-        "label": "Zoekknop toegankelijkheidslabel"
       }
     ]
   },
@@ -231,6 +229,124 @@
     ]
   },
   {
+    "id": "columns",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "number",
+        "name": "columns",
+        "value": "",
+        "label": "Kolommen"
+      },
+      {
+        "component": "text",
+        "valueType": "number",
+        "name": "rows",
+        "value": "",
+        "label": "Rijen"
+      }
+    ]
+  },
+  {
+    "id": "footer",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "copyright_text",
+        "label": "Copyrighttekst",
+        "required": true
+      }
+    ]
+  },
+  {
+    "id": "footer-link",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "link_text",
+        "label": "Link tekst",
+        "required": true
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "link_href",
+        "label": "Link URL",
+        "required": true
+      }
+    ]
+  },
+  {
+    "id": "fragment",
+    "fields": [
+      {
+        "component": "aem-content",
+        "name": "reference",
+        "label": "Referentie"
+      }
+    ]
+  },
+  {
+    "id": "header",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "logo_image",
+        "label": "Logo afbeelding",
+        "multi": false,
+        "required": true
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "logo_link",
+        "label": "Logo link (href)",
+        "required": true
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "search_placeholder",
+        "label": "Zoekveld placeholder"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "search_aria_label",
+        "label": "Zoekknop toegankelijkheidslabel"
+      }
+    ]
+  },
+  {
+    "id": "hero",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Afbeelding",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "imageAlt",
+        "label": "Alternatieve tekst",
+        "value": ""
+      },
+      {
+        "component": "richtext",
+        "name": "text",
+        "value": "",
+        "label": "Tekst",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "info-strip",
     "fields": [
       {
@@ -281,88 +397,6 @@
         "name": "login_link",
         "label": "Inloggen link (href)",
         "required": true
-      }
-    ]
-  },
-  {
-    "id": "footer",
-    "fields": [
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "copyright_text",
-        "label": "Copyrighttekst",
-        "required": true
-      }
-    ]
-  },
-  {
-    "id": "footer-link",
-    "fields": [
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "link_text",
-        "label": "Link tekst",
-        "required": true
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "link_href",
-        "label": "Link URL",
-        "required": true
-      }
-    ]
-  },
-  {
-    "id": "columns",
-    "fields": [
-      {
-        "component": "text",
-        "valueType": "number",
-        "name": "columns",
-        "label": "Kolommen"
-      },
-      {
-        "component": "text",
-        "valueType": "number",
-        "name": "rows",
-        "label": "Rijen"
-      }
-    ]
-  },
-  {
-    "id": "fragment",
-    "fields": [
-      {
-        "component": "aem-content",
-        "name": "reference",
-        "label": "Referentie"
-      }
-    ]
-  },
-  {
-    "id": "hero",
-    "fields": [
-      {
-        "component": "reference",
-        "valueType": "string",
-        "name": "image",
-        "label": "Afbeelding",
-        "multi": false
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "imageAlt",
-        "label": "Alternatieve tekst"
-      },
-      {
-        "component": "richtext",
-        "valueType": "string",
-        "name": "text",
-        "label": "Tekst"
       }
     ]
   }

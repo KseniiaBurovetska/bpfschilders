@@ -1,0 +1,54 @@
+{
+  "definitions": [
+    {
+      "title": "Header",
+      "id": "header",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "name": "Header",
+              "model": "header"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "header",
+      "fields": [
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "logo_image",
+          "label": "Logo afbeelding",
+          "multi": false,
+          "required": true
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "logo_link",
+          "label": "Logo link (href)",
+          "required": true
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "search_placeholder",
+          "label": "Zoekveld placeholder"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "search_aria_label",
+          "label": "Zoekknop toegankelijkheidslabel"
+        }
+      ]
+    }
+  ],
+  "filters": []
+}

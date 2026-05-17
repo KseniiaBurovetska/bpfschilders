@@ -48,7 +48,11 @@
         "button",
         "title",
         "hero",
+        "header",
         "cards",
+        "carousel",
+        "info-strip",
+        "footer",
         "columns",
         "fragment"
       ]
