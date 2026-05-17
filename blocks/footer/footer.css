@@ -1,20 +1,167 @@
-footer {
-  background-color: var(--light-color);
-  font-size: var(--body-font-size-xs);
+/*
+ * Footer block — BPF Schilders
+ *
+ * Source: footer.page-footer on www.bpfschilders.nl
+ * Derived from: scaffold/SiteFooterLegalLinks/draft.module.css
+ *               computed-styles.desktop.json
+ *               interaction-states.yaml
+ */
+
+/* ------------------------------------------------------------------ */
+/* Block root                                                           */
+/* ------------------------------------------------------------------ */
+.footer.block {
+  display: block;
+  background-color: #fff;
+  color: #212121;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 13.712px;
+  font-weight: 400;
+  line-height: 22.6248px;
+  margin-bottom: 27.424px;
 }
 
-footer .footer > div {
-  margin: auto;
+/* ------------------------------------------------------------------ */
+/* Nav container                                                        */
+/* ------------------------------------------------------------------ */
+.footer.block .footer-nav {
+  display: block;
   max-width: 1200px;
-  padding: 40px 24px 24px;
+  margin: 0 auto;
+  padding: 15px;
+  text-align: center;
 }
 
-footer .footer p {
+/* ------------------------------------------------------------------ */
+/* Copyright paragraph                                                  */
+/* ------------------------------------------------------------------ */
+.footer.block .footer-copyright {
+  color: #212121;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 13.712px;
+  font-weight: 400;
+  margin: 6.856px 0 13.712px;
+  text-align: center;
+}
+
+/* ------------------------------------------------------------------ */
+/* Link list                                                            */
+/* ------------------------------------------------------------------ */
+.footer.block .footer-links {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  list-style: none;
+  padding: 0;
   margin: 0;
+  gap: 0;
 }
 
-@media (width >= 900px) {
-  footer .footer > div {
-    padding: 40px 32px 24px;
+.footer.block .footer-links > li {
+  display: inline-flex;
+  align-items: center;
+  padding-right: 15px;
+}
+
+/* Pipe separator before every item except the first */
+.footer.block .footer-links > li + li::before {
+  content: "|";
+  color: #474747;
+  padding-right: 15px;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 13.712px;
+  font-weight: 400;
+}
+
+/* ------------------------------------------------------------------ */
+/* Links                                                                */
+/* ------------------------------------------------------------------ */
+.footer.block .footer-links a {
+  color: #474747;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 13.712px;
+  font-weight: 400;
+  text-decoration: none;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.footer.block .footer-links a:hover {
+  color: #442359;
+  text-decoration: underline;
+}
+
+.footer.block .footer-links a:focus-visible {
+  outline: 2px solid #442359;
+  outline-offset: 2px;
+}
+
+/* ------------------------------------------------------------------ */
+/* Cookie preference button (OneTrust)                                  */
+/* ------------------------------------------------------------------ */
+.footer.block .footer-links .ot-sdk-show-settings {
+  appearance: none;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  color: #474747;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 13.712px;
+  font-weight: 400;
+  text-decoration: none;
+  line-height: 22.6248px;
+}
+
+.footer.block .footer-links .ot-sdk-show-settings:hover {
+  color: #442359;
+  text-decoration: underline;
+}
+
+.footer.block .footer-links .ot-sdk-show-settings:focus-visible {
+  outline: 2px solid #442359;
+  outline-offset: 2px;
+}
+
+/* ------------------------------------------------------------------ */
+/* Mobile (≤ 767px)                                                     */
+/* Mobile screenshot shows links wrapping across 2 lines, centered,    */
+/* still separated by pipe characters.                                  */
+/* ------------------------------------------------------------------ */
+@media (max-width: 767px) {
+  .footer.block {
+    font-size: 13.712px;
+    margin-bottom: 0;
+  }
+
+  .footer.block .footer-nav {
+    padding: 15px;
+  }
+
+  .footer.block .footer-links {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .footer.block .footer-links > li {
+    padding-right: 10px;
+  }
+
+  .footer.block .footer-links > li + li::before {
+    padding-right: 10px;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Desktop (≥ 1200px) — explicit height from computed styles           */
+/* ------------------------------------------------------------------ */
+@media (min-width: 1200px) {
+  .footer.block {
+    height: 105.602px;
   }
 }

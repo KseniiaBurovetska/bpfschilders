@@ -6,20 +6,20 @@
         "component": "text",
         "valueType": "string",
         "name": "jcr:title",
-        "label": "Title"
+        "label": "Titel"
       },
       {
         "component": "text",
         "valueType": "string",
         "name": "jcr:description",
-        "label": "Description"
+        "label": "Beschrijving"
       },
       {
         "component": "text",
         "valueType": "string",
         "name": "keywords",
         "multi": true,
-        "label": "Keywords"
+        "label": "Trefwoorden"
       }
     ]
   },
@@ -29,13 +29,13 @@
       {
         "component": "reference",
         "name": "image",
-        "label": "Image",
+        "label": "Afbeelding",
         "multi": false
       },
       {
         "component": "text",
         "name": "imageAlt",
-        "label": "Alt Text"
+        "label": "Alternatieve tekst"
       }
     ]
   },
@@ -45,37 +45,19 @@
       {
         "component": "text",
         "name": "title",
-        "label": "Title"
+        "label": "Titel"
       },
       {
         "component": "select",
         "name": "titleType",
-        "label": "Title Type",
+        "label": "Koptype",
         "options": [
-          {
-            "name": "h1",
-            "value": "h1"
-          },
-          {
-            "name": "h2",
-            "value": "h2"
-          },
-          {
-            "name": "h3",
-            "value": "h3"
-          },
-          {
-            "name": "h4",
-            "value": "h4"
-          },
-          {
-            "name": "h5",
-            "value": "h5"
-          },
-          {
-            "name": "h6",
-            "value": "h6"
-          }
+          { "name": "h1", "value": "h1" },
+          { "name": "h2", "value": "h2" },
+          { "name": "h3", "value": "h3" },
+          { "name": "h4", "value": "h4" },
+          { "name": "h5", "value": "h5" },
+          { "name": "h6", "value": "h6" }
         ]
       }
     ]
@@ -91,30 +73,21 @@
       {
         "component": "text",
         "name": "linkText",
-        "label": "Text"
+        "label": "Tekst"
       },
       {
         "component": "text",
         "name": "linkTitle",
-        "label": "Title"
+        "label": "Titel"
       },
       {
         "component": "select",
         "name": "linkType",
         "label": "Type",
         "options": [
-          {
-            "name": "default",
-            "value": ""
-          },
-          {
-            "name": "primary",
-            "value": "primary"
-          },
-          {
-            "name": "secondary",
-            "value": "secondary"
-          }
+          { "name": "Standaard", "value": "" },
+          { "name": "Primair", "value": "primary" },
+          { "name": "Secundair", "value": "secondary" }
         ]
       }
     ]
@@ -125,19 +98,48 @@
       {
         "component": "text",
         "name": "name",
-        "label": "Section Name",
-        "description": "The label shown for this section in the Content Tree"
+        "label": "Sectienaam",
+        "description": "Het label dat voor deze sectie in de inhoudsstructuur wordt getoond"
       },
       {
         "component": "multiselect",
         "name": "style",
-        "label": "Style",
+        "label": "Stijl",
         "options": [
-          {
-            "name": "Highlight",
-            "value": "highlight"
-          }
+          { "name": "Markering", "value": "highlight" }
         ]
+      }
+    ]
+  },
+  {
+    "id": "header",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "logo_image",
+        "label": "Logo afbeelding",
+        "multi": false,
+        "required": true
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "logo_link",
+        "label": "Logo link (href)",
+        "required": true
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "search_placeholder",
+        "label": "Zoekveld placeholder"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "search_aria_label",
+        "label": "Zoekknop toegankelijkheidslabel"
       }
     ]
   },
@@ -147,16 +149,169 @@
       {
         "component": "reference",
         "valueType": "string",
-        "name": "image",
-        "label": "Image",
-        "multi": false
+        "name": "card_image",
+        "label": "Kaart afbeelding",
+        "multi": false,
+        "required": true
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "card_image_link",
+        "label": "Afbeelding link (href)",
+        "required": true
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "card_heading",
+        "label": "Kaart titel",
+        "required": true
       },
       {
         "component": "richtext",
-        "name": "text",
-        "value": "",
-        "label": "Text",
-        "valueType": "string"
+        "valueType": "string",
+        "name": "card_body",
+        "label": "Kaart tekst",
+        "required": true
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "card_cta_text",
+        "label": "CTA knoptekst",
+        "required": true
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "card_cta_link",
+        "label": "CTA knop link (href)",
+        "required": true
+      }
+    ]
+  },
+  {
+    "id": "carousel",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "section_heading",
+        "label": "Sectie titel",
+        "required": true
+      }
+    ]
+  },
+  {
+    "id": "carousel-item",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "icon_class",
+        "label": "Icoon klasse (BPFicons)",
+        "required": true,
+        "description": "Een van: icon-bpf-pensioen, icon-bpf-trouwen, icon-bpf-verhuizen, icon-bpf-scheiden, icon-bpf-ontslag, icon-bpf-veranderenvanbaan, icon-bpf-uitzendkracht, icon-bpf-voorjezelfbeginnen, icon-bpf-arbeidsongeschikt, icon-bpf-verlof, icon-bpf-overlijden"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "item_label",
+        "label": "Item label",
+        "required": true
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "item_link",
+        "label": "Item link (href)",
+        "required": true
+      }
+    ]
+  },
+  {
+    "id": "info-strip",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "coverage_icon_class",
+        "label": "Dekkingsgraad icoon klasse",
+        "required": true
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "coverage_label",
+        "label": "Dekkingsgraad label",
+        "required": true
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "coverage_value",
+        "label": "Dekkingsgraad waarde",
+        "required": true
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "coverage_link",
+        "label": "Dekkingsgraad link (href)",
+        "required": true
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "login_icon_class",
+        "label": "Inloggen icoon klasse",
+        "required": true
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "login_label",
+        "label": "Inloggen label",
+        "required": true
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "login_link",
+        "label": "Inloggen link (href)",
+        "required": true
+      }
+    ]
+  },
+  {
+    "id": "footer",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "copyright_text",
+        "label": "Copyrighttekst",
+        "required": true
+      }
+    ]
+  },
+  {
+    "id": "footer-link",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "link_text",
+        "label": "Link tekst",
+        "required": true
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "link_href",
+        "label": "Link URL",
+        "required": true
       }
     ]
   },
@@ -167,15 +322,13 @@
         "component": "text",
         "valueType": "number",
         "name": "columns",
-        "value": "",
-        "label": "Columns"
+        "label": "Kolommen"
       },
       {
         "component": "text",
         "valueType": "number",
         "name": "rows",
-        "value": "",
-        "label": "Rows"
+        "label": "Rijen"
       }
     ]
   },
@@ -185,7 +338,7 @@
       {
         "component": "aem-content",
         "name": "reference",
-        "label": "Reference"
+        "label": "Referentie"
       }
     ]
   },
@@ -196,22 +349,20 @@
         "component": "reference",
         "valueType": "string",
         "name": "image",
-        "label": "Image",
+        "label": "Afbeelding",
         "multi": false
       },
       {
         "component": "text",
         "valueType": "string",
         "name": "imageAlt",
-        "label": "Alt",
-        "value": ""
+        "label": "Alternatieve tekst"
       },
       {
         "component": "richtext",
+        "valueType": "string",
         "name": "text",
-        "value": "",
-        "label": "Text",
-        "valueType": "string"
+        "label": "Tekst"
       }
     ]
   }

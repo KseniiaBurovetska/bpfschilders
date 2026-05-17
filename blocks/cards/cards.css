@@ -1,27 +1,206 @@
-.cards > ul {
+/*
+ * Cards block — BPF Schilders EDS migration
+ * Source component: WebinarTeaserGrid (section.panels on bpfschilders.nl)
+ *
+ * Values taken verbatim from:
+ *   - computed-styles.desktop.json (viewportWidth: 1440)
+ *   - design-tokens.yaml
+ *   - interaction-states.yaml
+ *   - scaffold: draft.module.css
+ *
+ * FontAwesome (fa-angle-right, unicode f105) is served from the EDS fonts/
+ * directory via the @font-face declaration in styles.css.
+ */
+
+/* ── Section wrapper ─────────────────────────────────────────────────────── */
+.cards {
+  margin: 30px 0;
+  color: rgb(33, 33, 33);
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 13.712px;
+  font-weight: 400;
+  line-height: 22.6248px;
+}
+
+/* ── Card grid ───────────────────────────────────────────────────────────── */
+.cards .cards-wrapper {
   list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(257px, 1fr));
-  gap: 24px;
+  margin: 0 auto;
+  padding: 0 15px;
+  max-width: 1200px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 0;
 }
 
-.cards > ul > li {
-  border: 1px solid #dadada;
-  background-color: var(--background-color);
-}
-
-.cards .cards-card-body {
-  margin: 16px;
-}
-
-.cards .cards-card-image {
-  line-height: 0;
-}
-
-.cards > ul > li img {
+/* ── Individual card column ──────────────────────────────────────────────── */
+.cards .card {
   width: 100%;
-  aspect-ratio: 4 / 3;
+  padding: 0 8px;
+  margin-bottom: 24px;
+  box-sizing: border-box;
+}
+
+/* Desktop: 3-column layout */
+@media (min-width: 768px) {
+  .cards .card {
+    width: 33.3333%;
+    padding: 0 16px;
+    margin-bottom: 0;
+  }
+}
+
+/* ── Card panel (white box with shadow) ─────────────────────────────────── */
+.cards .card-image-link,
+.cards .cards-card-body {
+  display: block;
+}
+
+/* Wrap image + body in the li so they stack vertically */
+.cards .card {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Inner white card container achieved by styling the li itself */
+.cards .card > .card-image-link,
+.cards .card > .cards-card-body {
+  background-color: rgb(255, 255, 255);
+}
+
+/* Shadow on the whole card — apply it to a wrapper inside li */
+.cards .card::after {
+  content: none;
+}
+
+/* The card visual box = image link + body grouped together */
+.cards .card {
+  background-color: rgb(255, 255, 255);
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 4px 0px;
+  border-radius: 0;
+  overflow: hidden;
+}
+
+/* ── Card image ─────────────────────────────────────────────────────────── */
+.cards .card-image-link {
+  display: block;
+  line-height: 0;
+  text-decoration: none;
+  overflow: hidden;
+}
+
+.cards .card-image {
+  display: block;
+  overflow: hidden;
+  height: 207.602px;
+  margin: 0;
+}
+
+.cards .card-image picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.cards .card-image img {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
+  display: block;
+}
+
+/* ── Card body ──────────────────────────────────────────────────────────── */
+.cards .cards-card-body {
+  padding: 0;
+  flex: 1;
+}
+
+/* ── Card heading (h2) ──────────────────────────────────────────────────── */
+.cards .card-heading {
+  color: rgb(68, 35, 89);
+  font-size: 17.044px;
+  font-family: Lato, Arial, sans-serif;
+  font-weight: 700;
+  line-height: 22.6248px;
+  margin: 0 0 5.62453px;
+  padding: 15px 16px 0;
+}
+
+/* ── Card body paragraph ────────────────────────────────────────────────── */
+.cards .card-description {
+  color: rgb(33, 33, 33);
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 13.712px;
+  line-height: 22.6248px;
+  margin: 6.856px 0 13.712px;
+  padding: 0 16px;
+}
+
+/* ── CTA button ─────────────────────────────────────────────────────────── */
+.cards .card-cta.button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: rgb(255, 255, 255);
+  background-color: rgb(68, 35, 89);
+  font-family: Lato, Arial, sans-serif;
+  font-size: 15.6728px;
+  font-weight: 400;
+  line-height: 1;
+  padding: 9.40369px 15.6728px;
+  text-decoration: none;
+  border-radius: 0;
+  margin: 0 16px 16px;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.15s ease;
+}
+
+/* FontAwesome fa-angle-right icon ( f105 ) */
+.cards .card-cta.button .fa.fa-angle-right {
+  font-family: FontAwesome, sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  speak: never;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 15.6728px;
+  line-height: 1;
+}
+
+.cards .card-cta.button .fa.fa-angle-right::before {
+  content: "\f105";
+}
+
+/* ── CTA interaction states ─────────────────────────────────────────────── */
+.cards .card-cta.button:hover {
+  background-color: rgb(50, 20, 70);
+  color: rgb(255, 255, 255);
+}
+
+.cards .card-cta.button:focus-visible {
+  outline: 2px solid rgb(68, 35, 89);
+  outline-offset: 2px;
+}
+
+.cards .card-cta.button:active {
+  background-color: rgb(40, 15, 60);
+}
+
+/* ── Mobile: single column ──────────────────────────────────────────────── */
+@media (max-width: 767px) {
+  .cards .cards-wrapper {
+    padding: 0 12px;
+  }
+
+  .cards .card {
+    width: 100%;
+    padding: 0;
+    margin-bottom: 24px;
+  }
+
+  .cards .card:last-child {
+    margin-bottom: 0;
+  }
 }
