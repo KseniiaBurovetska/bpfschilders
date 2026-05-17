@@ -1,5 +1,5 @@
 mountpoints:
   /:
-    url: "https://author-p24103-e71623.adobeaemcloud.com/bin/franklin.delivery/KseniiaBurovetska/eds-ue-demo/main"
+    url: "https://author-p24103-e71623.adobeaemcloud.com/bin/franklin.delivery/KseniiaBurovetska/bpfschilders/main"
     type: "markup"
     suffix: ".html"
